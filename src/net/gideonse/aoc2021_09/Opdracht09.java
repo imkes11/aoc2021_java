@@ -1,4 +1,4 @@
-package net.gideonse.aoc2021_09;
+package gideonse.aoc2021_09;
 
 import java.io.IOException;
 import java.nio.file.Files;
