@@ -9,10 +9,10 @@ public class SomPakket extends AbstractOperatorPakket{
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        final Integer som = kinderen.stream()
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        final Long som = kinderen.stream()
                 .map(kind -> kind.doeBerekening(kind.getKinderen()))
-                .reduce(0, Integer::sum);
+                .reduce(0L, Long::sum);
         System.out.print("SomPakket.doeBerekening");
         System.out.print("                                                          som = " + som);
         System.out.println(" kinderen.size() = " + kinderen.size());
@@ -20,8 +20,17 @@ public class SomPakket extends AbstractOperatorPakket{
         return som;
     }
 
+//    @Override
+//    public String toString() {
+//        return "SomPakket{}";
+//    }
+
+
     @Override
     public String toString() {
-        return "SomPakket{}";
+        return "\nSomPakket{" +
+                "versie=" + versie +
+                ", kinderen=" + kinderen +
+                '}';
     }
 }

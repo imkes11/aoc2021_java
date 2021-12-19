@@ -9,8 +9,8 @@ public class OperatorPakket extends Pakket {
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        return -1;
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        return -1L;
     }
 
     @Override

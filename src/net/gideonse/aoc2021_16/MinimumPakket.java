@@ -8,10 +8,10 @@ public class MinimumPakket extends AbstractOperatorPakket{
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        final Integer min = kinderen.stream()
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        final Long min = kinderen.stream()
                 .map(kind -> kind.doeBerekening(kind.getKinderen()))
-                .reduce(Integer.MAX_VALUE, Integer::min);
+                .reduce(Long.MAX_VALUE, Long::min);
         System.out.print("MinimumPakket.doeBerekening");
         System.out.println(" min = " + min);
         return min;

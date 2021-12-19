@@ -10,8 +10,8 @@ public class GelijkAanPakket extends AbstractOperatorPakket {
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        final List<Integer> kleinkinderen = kinderen.stream()
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        final List<Long> kleinkinderen = kinderen.stream()
                 .map(kind -> kind.doeBerekening(kind.getKinderen())).toList();
         if(kleinkinderen.size() != 2){
             throw new RuntimeException("Het aantal kleinkinderen is " + kleinkinderen.size());
@@ -20,11 +20,19 @@ public class GelijkAanPakket extends AbstractOperatorPakket {
         System.out.print("GelijkAanPakket.doeBerekening " + kleinkinderen.size());
         System.out.println(" kleinkinderen = " + kleinkinderen);
         System.out.println("                                                     gelijk aan = " + (Objects.equals(kleinkinderen.get(0), kleinkinderen.get(1)) ? 1 : 0));
-        return Objects.equals(kleinkinderen.get(0), kleinkinderen.get(1)) ? 1 : 0;
+        return Objects.equals(kleinkinderen.get(0), kleinkinderen.get(1)) ? 1L : 0L;
     }
 
     @Override
     public String toString() {
-        return "GelijkAanPakket{}";
+        return "\nGelijkAanPakket{" +
+                "versie=" + versie +
+                ", kinderen=" + kinderen +
+                '}';
     }
+
+    //    @Override
+//    public String toString() {
+//        return "GelijkAanPakket{}";
+//    }
 }

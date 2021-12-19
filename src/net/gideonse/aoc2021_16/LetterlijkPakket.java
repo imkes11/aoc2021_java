@@ -17,13 +17,14 @@ public class LetterlijkPakket extends Pakket {
 
     public LetterlijkPakket(String letterlijkeWaarde, Integer versie, List<Pakket> kinderen) {
         super(versie, kinderen);
-        this.letterlijkeWaarde = String.valueOf(Integer.parseInt(letterlijkeWaarde,2));
+//        System.out.println("uiteindelijke letterlijkeWaarde = " + letterlijkeWaarde);
+        this.letterlijkeWaarde = String.valueOf(Long.parseLong(letterlijkeWaarde,2));
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
         System.out.println("letterlijkeWaarde = " + letterlijkeWaarde);
-        return Integer.valueOf(letterlijkeWaarde);
+        return Long.valueOf(letterlijkeWaarde);
     }
 
     public String getLetterlijkeWaarde() {
@@ -54,7 +55,7 @@ public class LetterlijkPakket extends Pakket {
         return "LetterlijkPakket{" +
                 "letterlijkeWaarde='" + letterlijkeWaarde + '\'' +
                 ", versie=" + versie +
-                ", kinderen=" + kinderen +
+//                ", kinderen=" + kinderen +
                 '}';
     }
 }

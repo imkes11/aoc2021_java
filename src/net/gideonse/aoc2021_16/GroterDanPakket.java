@@ -8,15 +8,15 @@ public class GroterDanPakket extends AbstractOperatorPakket {
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        final List<Integer> kleinkinderen = kinderen.stream()
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        final List<Long> kleinkinderen = kinderen.stream()
                 .map(kind -> kind.doeBerekening(kind.getKinderen())).toList();
         assert kleinkinderen.size() == 2;
 
         System.out.print("GroterDanPakket.doeBerekening");
         System.out.println(" kleinkinderen = " + kleinkinderen);
 
-        return kleinkinderen.get(0) > kleinkinderen.get(1) ? 1 : 0;
+        return kleinkinderen.get(0) > kleinkinderen.get(1) ? 1L : 0L;
     }
 
     @Override

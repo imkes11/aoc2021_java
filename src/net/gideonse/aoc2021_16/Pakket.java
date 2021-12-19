@@ -11,8 +11,8 @@ public abstract class Pakket {
         this.kinderen = kinderen;
     }
 
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        return -2;
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        return -2L;
     }
 
     public Integer getVersie() {

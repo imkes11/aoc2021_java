@@ -8,10 +8,10 @@ public class MaximumPakket extends AbstractOperatorPakket{
     }
 
     @Override
-    public Integer doeBerekening(List<? extends Pakket> kinderen) {
-        final Integer max = kinderen.stream()
+    public Long doeBerekening(List<? extends Pakket> kinderen) {
+        final Long max = kinderen.stream()
                 .map(kind -> kind.doeBerekening(kind.getKinderen()))
-                .reduce(0, Integer::max);
+                .reduce(0L, Long::max);
         System.out.print("MaximumPakket.doeBerekening");
         System.out.println(" max = " + max);
         return max;

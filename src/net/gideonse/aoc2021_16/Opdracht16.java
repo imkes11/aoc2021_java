@@ -25,6 +25,17 @@ import java.util.stream.Stream;
  * en?
  * eind = 2021-12-17T23:24:30.435290700
  * totale duur = 0
+ *
+ * b
+ * - eerst de combinatie van vermenigvuldiging en som voorkomen door aan het einde van de loop niet te gaan
+ * kijken of er nog meer enen aanwezig waren
+ * - zorgen dat 2021 niet 1013 oplevert doordat er ergens nog met een Integer gewerkt werd
+ * - berekening omzetten van Integer naar Long
+ * maar jammer genoeg leverde dat:
+ * That's not the right answer; your answer is too low. If you're stuck, make sure you're using the full input data;
+ * there are also some general tips on the about page, or you can ask for hints on the subreddit.
+ * Please wait one minute before trying again. (You guessed 3268122898.) [Return to Day 16]
+ *
  */
 public class Opdracht16 {
     public static void main(String... args) {
@@ -68,11 +79,15 @@ public class Opdracht16 {
             System.out.println("binaireRegel.length() = " + binaireRegel.length());
 
             int resultaatA = -1;
-            resultaatA = bepaalTotaalVersieNummers(binaireRegel);
+//            resultaatA = bepaalTotaalVersieNummers(binaireRegel);
             System.out.println("resultaatA = " + resultaatA + "\n\n\n");
 
             int resultaatB = bepaalBerekening(binaireRegel);
             System.out.println("resultaatB = " + resultaatB);
+
+
+            // is 111111111111111111111111111111 kleiner dan
+            //    11100101101110000110010110110000
 
             System.out.println("en?");
         } catch (IOException e) {
@@ -106,7 +121,10 @@ public class Opdracht16 {
 //        GA voor de zekerheid nog een keer door het hele pakket
 
 
+        System.out.println("\n\n\npakketten = " + pakketten);
 
+
+        System.out.println("En dat levert het resultaat");
         pakketten.stream()
                 .map(pakket -> pakket.doeBerekening(pakket.getKinderen()))
                 .forEach(System.out::println);
@@ -141,13 +159,13 @@ public class Opdracht16 {
         System.out.println("nieuwPakket = " + nieuwPakket);
         System.out.println("nieuwPakket.getKinderen() = " + nieuwPakket.getKinderen());
 
-        if (binaireLink.stream().toList().contains("1")) {
-            pakketten.addAll(bepaalPakketten(binaireLink, new ArrayList<>()));
-        } else {
-            System.out.print("b = " + binaireLink.size());
-            System.out.println(" binaireLink = " + binaireLink);
-//            pakketten = new ArrayList<>(); // <==
-        }
+//        if (binaireLink.stream().toList().contains("1")) {
+//            pakketten.addAll(bepaalPakketten(binaireLink, new ArrayList<>()));
+//        } else {
+//            System.out.print("b = " + binaireLink.size());
+//            System.out.println(" binaireLink = " + binaireLink);
+////            pakketten = new ArrayList<>(); // <==
+//        }
         System.out.println("einde Opdracht16.bepaalPakketten met ");
         System.out.println("pakketten = " + pakketten);
         return pakketten;
@@ -187,6 +205,7 @@ public class Opdracht16 {
 //                    .limit(verwachteAantalSubs)
                     .toList();
             System.out.print("het verwachteAantalSubs = " + verwachteAantalSubs);
+            System.out.print(" size() = " + pakketjes.size());
             System.out.println(" pakketjes = " + pakketjes);
 
 //            final List<Pakket> pakken;
@@ -199,8 +218,9 @@ public class Opdracht16 {
 //                pakken = new ArrayList<>(pakketjes);
 //            }
 //            pakketten.addAll(pakken);
-            pakketten.addAll(pakketjes);
-////            pakketten = pakketjes;
+
+//            pakketten.addAll(pakketjes);
+            pakketten = pakketjes;
         }
         return pakketten;
     }
@@ -221,13 +241,17 @@ public class Opdracht16 {
         final String isLaatsteCijferBlok = neemEerste(1, binaireLink);
         if ("0".equals(isLaatsteCijferBlok)) {
 //          neem de laatste vier tekens en stop ermee
-            final String laatsteCijfer = String.valueOf(Integer.parseInt(neemEerste(4, binaireLink)));
+            final String laatsteBinairGetal = neemEerste(4, binaireLink);
+//            System.out.println("                                           laatsteBinairGetal = " + laatsteBinairGetal);
+            final String laatsteCijfer = laatsteBinairGetal;
 //            return String.valueOf(Integer.parseInt(laatsteCijfer, 2));
             return laatsteCijfer;
         }
 //      neem de volgende vier en check de beginbit
 //        return Integer.parseInt(neemEerste(4, binaireLink), 2) + bepaalCijferRecursie(binaireLink);
-        return neemEerste(4, binaireLink) + bepaalCijferRecursie(binaireLink);
+        final String eenEerderBinairGetal = neemEerste(4, binaireLink);
+//        System.out.println("                                           eenEerderBinairGetal = " + eenEerderBinairGetal);
+        return eenEerderBinairGetal + bepaalCijferRecursie(binaireLink);
     }
 
     private static Integer bepaalType(LinkedList<String> binaireLink) {
@@ -242,7 +266,7 @@ public class Opdracht16 {
         return versie;
     }
 
-    private static String neemEerste(int aantal, LinkedList<String> binaireLink) {
+    private static String neemEerste(long aantal, LinkedList<String> binaireLink) {
         StringBuilder test = new StringBuilder();
         for (int j = 0; j < aantal; j++) {
             test.append(binaireLink.pop());
