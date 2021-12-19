@@ -1,5 +1,6 @@
 package gideonse.aoc2021_16;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,11 @@ public class LetterlijkPakket extends Pakket {
     public LetterlijkPakket(String letterlijkeWaarde, Integer versie, List<Pakket> kinderen) {
         super(versie, kinderen);
 //        System.out.println("uiteindelijke letterlijkeWaarde = " + letterlijkeWaarde);
+        final BigInteger bigInteger = new BigInteger(letterlijkeWaarde, 2);
+        if (bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+            System.exit(-24);
+        }
+
         this.letterlijkeWaarde = String.valueOf(Long.parseLong(letterlijkeWaarde,2));
     }
 

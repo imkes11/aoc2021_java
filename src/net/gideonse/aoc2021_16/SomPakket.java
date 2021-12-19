@@ -1,5 +1,6 @@
 package gideonse.aoc2021_16;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class SomPakket extends AbstractOperatorPakket{
@@ -10,6 +11,13 @@ public class SomPakket extends AbstractOperatorPakket{
 
     @Override
     public Long doeBerekening(List<? extends Pakket> kinderen) {
+        final BigInteger bigInteger = kinderen.stream()
+                .map(kind -> kind.doeBerekening((kind.getKinderen())))
+                .map(BigInteger::valueOf)
+                .reduce(BigInteger.ZERO, BigInteger::add);
+        if (bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+            System.exit(-22);
+        }
         final Long som = kinderen.stream()
                 .map(kind -> kind.doeBerekening(kind.getKinderen()))
                 .reduce(0L, Long::sum);

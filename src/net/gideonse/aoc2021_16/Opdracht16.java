@@ -79,11 +79,11 @@ public class Opdracht16 {
             System.out.println("binaireRegel.length() = " + binaireRegel.length());
 
             int resultaatA = -1;
-//            resultaatA = bepaalTotaalVersieNummers(binaireRegel);
+            resultaatA = bepaalTotaalVersieNummers(binaireRegel);
             System.out.println("resultaatA = " + resultaatA + "\n\n\n");
 
             int resultaatB = bepaalBerekening(binaireRegel);
-            System.out.println("resultaatB = " + resultaatB);
+//            System.out.println("resultaatB = " + resultaatB);
 
 
             // is 111111111111111111111111111111 kleiner dan
@@ -110,25 +110,23 @@ public class Opdracht16 {
         System.out.println("met de bijbehorende classes");
         pakketten.forEach(pak -> System.out.println(pak.getClass()));
 
-//        trek de boel weer recht in een andere recursie methode
-//        pak alle pakketten van het hoofdpakket
-//        neem hier de kinderen van als
-//        if (pakketjes.stream().anyMatch(pakket -> pakket instanceof LetterlijkPakket)
-//                && pakketjes.stream().anyMatch(pakket -> pakket instanceof AbstractOperatorPakket){
-//          zet de AbstractOperatorPakket op een of andere manier een niveau hoger...
-//        } else {
-//          ga naar de kinderen van de kinderen
-//        GA voor de zekerheid nog een keer door het hele pakket
-
-
         System.out.println("\n\n\npakketten = " + pakketten);
 
+        final Integer versieTotaal = bepaalVersieTotaalBijB(pakketten);
+        System.out.println("versieTotaal = " + versieTotaal);
 
+        System.exit(30);
         System.out.println("En dat levert het resultaat");
         pakketten.stream()
                 .map(pakket -> pakket.doeBerekening(pakket.getKinderen()))
                 .forEach(System.out::println);
         return 0;
+    }
+
+    private static Integer bepaalVersieTotaalBijB(List<? extends Pakket> pakketten) {
+        return pakketten.stream()
+                .map(pakket -> pakket.getVersie() + bepaalVersieTotaalBijB(pakket.getKinderen()))
+                .reduce(0, Integer::sum);
     }
 
     private static List<Pakket> bepaalPakketten(LinkedList<String> binaireLink, List<Pakket> pakketten) {
@@ -159,6 +157,8 @@ public class Opdracht16 {
         System.out.println("nieuwPakket = " + nieuwPakket);
         System.out.println("nieuwPakket.getKinderen() = " + nieuwPakket.getKinderen());
 
+        // deze moet weg anders gaat de vermenigvuldiging in de som
+        // maar er is wel zoiets nodig want deze zorgde voor de juiste waarde bij a
 //        if (binaireLink.stream().toList().contains("1")) {
 //            pakketten.addAll(bepaalPakketten(binaireLink, new ArrayList<>()));
 //        } else {
@@ -168,6 +168,7 @@ public class Opdracht16 {
 //        }
         System.out.println("einde Opdracht16.bepaalPakketten met ");
         System.out.println("pakketten = " + pakketten);
+        System.out.println("binaireLink = " + String.join("", binaireLink));
         return pakketten;
     }
 
@@ -184,7 +185,7 @@ public class Opdracht16 {
             pakketten.addAll(bepaalPakketten(subdeel, new ArrayList<>()));
 //            pakketten.add(new OperatorPakket(versie, bepaalPakketten(subdeel, new ArrayList<>())));
             if (subdeel.stream().toList().contains("1")) {
-                System.out.println("__DE REST");
+                System.out.println("__DE REST " + String.join("", subdeel));
                 pakketten.addAll(bepaalPakketten(subdeel, new ArrayList<>()));
             } else {
                 System.out.print("subdeel.size() = " + subdeel.size());
@@ -207,6 +208,9 @@ public class Opdracht16 {
             System.out.print("het verwachteAantalSubs = " + verwachteAantalSubs);
             System.out.print(" size() = " + pakketjes.size());
             System.out.println(" pakketjes = " + pakketjes);
+            if (verwachteAantalSubs != pakketjes.size()) {
+                System.exit(-40);
+            }
 
 //            final List<Pakket> pakken;
 //            if (verwachteAantalSubs != pakketjes.size()) {
